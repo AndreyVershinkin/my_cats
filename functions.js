@@ -50,3 +50,35 @@ const showPopup = (list, type, content) => {
    el.classList.add("active");
    el.parentElement.classList.add("active");
 };
+
+
+const addCat = (e, api, popupList) => {
+   e.preventDefault();
+   let body = {};
+   for (let i = 0; i < e.target.elements.length; i++) {
+      let el = e.target.elements[i];
+      if (el.name) {
+         if (el.type === "checkbox") {
+            body[el.name] = el.checked;
+         } else if (el.value) {
+            body[el.name] = el.value;
+         }
+      }
+   }
+   console.log(body);
+   api.addCat(body)
+      .then(res => res.json())
+      .then(data => {
+         console.log(data.message);
+         if (data.message === "ok") {
+            // localStorage.setItem("cat", JSON.stringify(body));
+            createCard(body, document.querySelector(".container"));
+            store.push(body);
+            localStorage.setItem("cats", JSON.stringify(store));
+            e.target.reset();
+            document.querySelector(".popup-wrapper").classList.remove("active");
+            document.querySelector(".popup").classList.remove("active");
+         }
+         // showPopup(popupList, "info", data.message);
+      });
+};
