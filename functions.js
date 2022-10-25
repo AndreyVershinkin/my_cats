@@ -31,11 +31,14 @@ const createCard = (data, parent, arr) => {
    photo.append(pic);
    card.append(title);
    title.append(name, age, rate);
-   parent.append(card);
 
    card.addEventListener("click", function () {
       showPopup(arr, "card");
    });
+
+   parent.append(card);
+
+
 };
 
 
@@ -52,7 +55,7 @@ const showPopup = (list, type, content) => {
 };
 
 
-const addCat = (e, api, popupList) => {
+const addCat = (e, api, popupList, store) => {
    e.preventDefault();
    let body = {};
    for (let i = 0; i < e.target.elements.length; i++) {
@@ -65,11 +68,9 @@ const addCat = (e, api, popupList) => {
          }
       }
    }
-   console.log(body);
    api.addCat(body)
       .then(res => res.json())
       .then(data => {
-         console.log(data.message);
          if (data.message === "ok") {
             // localStorage.setItem("cat", JSON.stringify(body));
             createCard(body, document.querySelector(".container"));
@@ -80,5 +81,5 @@ const addCat = (e, api, popupList) => {
             document.querySelector(".popup").classList.remove("active");
          }
          // showPopup(popupList, "info", data.message);
-      });
+      })
 };

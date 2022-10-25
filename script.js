@@ -66,7 +66,7 @@ popBox.addEventListener("click", function (e) {
          if (p.classList.contains("active")) {
             p.classList.remove("active");
          }
-      });
+      })
    }
 });
 
